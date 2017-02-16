@@ -1,8 +1,16 @@
 language: node_js
 node_js:
   - "6"
+env:
+  global:
+    - NODE_ENV:test
+addons:
+  sauce_connect: true
 notifications:
-  - "everton0189@gmail.com"
+  email:
+    - "everton0189@gmail.com"
+services:
+  - "mongodb"
 before_install:
   - "npm install -g bower"
   - "npm install -g grunt-cli"
@@ -11,7 +19,10 @@ before_install:
   - "webdriver-manager update"
   - "bower install"
 before_script:
+  - "node test/data.js"
   - "grunt"
   - "cd dist"
 script:
   - "karma start config/karma.config.js --single-run --browsers PhantomJS"
+  - "node server &"
+  - "protractor config/protractor.js"
