@@ -1,28 +1,42 @@
 language: node_js
 node_js:
-  - "6"
+- '6'
 env:
   global:
-    - NODE_ENV=test
+  - NODE_ENV=test
 addons:
   sauce_connect: true
 notifications:
   email:
-    - "everton0189@gmail.com"
+  - everton0189@gmail.com
 services:
-  - "mongodb"
+- mongodb
 before_install:
-  - "npm install -g bower"
-  - "npm install -g grunt-cli"
-  - "npm install -g karma-cli"
-  - "npm install -g protractor"
-  - "webdriver-manager update"
-  - "bower install"
+- npm install -g bower
+- npm install -g grunt-cli
+- npm install -g karma-cli
+- npm install -g protractor
+- webdriver-manager update
+- bower install
 before_script:
-  - "node test/data.js"
-  - "grunt"
-  - "cd dist"
+- node test/data.js
+- grunt minifica
 script:
-  - "karma start config/karma.config.js --single-run --browsers PhantomJS"
-  - "node server &"
-  - "protractor config/protractor.js"
+- karma start config/karma.config.js --single-run --browsers PhantomJS
+- node server &
+- protractor config/protractor.js
+before_deploy:
+- git config --global user.email 'travis@travis-ci.com'
+- git config --global user.name 'Travis CI'
+- git checkout $TRAVIS_BRANCH
+- git add --all
+- git commit -am "Travis commit"
+deploy:
+  provider: openshift
+  user: evemsilva
+  password:
+    secure: Hx54O8ja7TqY+qJcIBi0AlObkhXpf8jgXismJiMJO56f8zIOlUPxve6lOjrQgr1SbJBNwzxBonGiV4bSFwcEW5JG2AA95lF999ScvcET51fUoh40BR6OWcHxj4ymHzRrhoGCeinMpJRHxKC8nnQv84joGIxzuWPQpa6+6sIsDVdx8P4JZPerCuZbjizgskVl6J0969D3jkINh4fSeysfw0AkELeN2DRREVqDDvXZadysJjO/sVlSd5DMK+2wSc/VzXON8+d6lkMKqDTBGPXx28jNp8/Z9LqWZ/82wo4uHsVTRhXyfPRobdgIWJ3sEKPftivUJ8fDwqIvuUVgvyBW6NPThIAO/6t3LkGVZmcWBxwi8v1ISeBfc51BKqC7HND/EC/wA4Eo6Bwx4IPjK1n2R/b1vTNR7AKa0f5fGuLH0WeF6ODBVnhkZVBO4ymR3F25ycAVQYIDBDdsSOoD10EpiP8pzHgJQv1BKvzpFbNyTRRzpVew0l4qzp7U+9X975/TeLqmVKnuBpPKfYGv49nnrDtpItHdLI4WItOzX3qIPp/DGF7X/600LfiL4nqpY5qA1gjMJIfa5hWXXpeo/rQF4LYnLAcyQNtAp6GGjpOQeDe0oTmtUN9x52upkmLBJoX5W3zN1KKXTBjqXXGZ0RGecfRt6jV98iKmLfV3qCXEXIQ=
+  app: contatooh
+  domain: contatooh-mean
+  on:
+    repo: evemsilva/contatooh
