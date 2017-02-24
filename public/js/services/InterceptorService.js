@@ -1,7 +1,7 @@
 angular.module('contatooh')
     .factory('meuInterceptor',
 
-    function ($location, $q) {
+    ["$location", "$q", function ($location, $q) {
 
         var interceptor = {
 
@@ -15,4 +15,4 @@ angular.module('contatooh')
         }
 
         return interceptor;
-    });
+    }]);

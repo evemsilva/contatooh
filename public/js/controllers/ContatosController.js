@@ -1,5 +1,5 @@
 angular.module('contatooh').controller('ContatosController',
-    function ($scope, $resource, Contato) {
+    ["$scope", "$resource", "Contato", function ($scope, $resource, Contato) {
 
         $scope.filtro = '';
         $scope.mensagem = { texto: '' };
@@ -34,4 +34,4 @@ angular.module('contatooh').controller('ContatosController',
             );
         };
 
-    });
+    }]);
