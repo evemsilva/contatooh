@@ -1,18 +1,13 @@
-angular.module('contatooh')
-    .factory('meuInterceptor',
+angular.module('contatooh').factory('meuInterceptor', function ($q, $location) {
 
-    ["$location", "$q", function ($location, $q) {
-
-        var interceptor = {
-
-            responseError: function (resposta) {
-
-                if (resposta.status == 401) {
-                    $location.path('/auth');
-                }
-                return $q.reject(resposta);
+    var meuInterceptor = {
+        responseError: function (resposta) {
+            if (resposta.status == 401) {
+                $location.path('/auth');
             }
+            return $q.reject(resposta);
         }
+    }
 
-        return interceptor;
-    }]);
+    return meuInterceptor;
+});
