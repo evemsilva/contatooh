@@ -1,5 +1,5 @@
 angular.module('contatooh', ['ngRoute', 'ngResource','meusComponentes'])
-    .config(function ($routeProvider, $httpProvider) {
+    .config(["$routeProvider", "$httpProvider", function ($routeProvider, $httpProvider) {
 
         // Interceptador de requisicao
         $httpProvider.interceptors.push('meuInterceptor');
@@ -25,4 +25,4 @@ angular.module('contatooh', ['ngRoute', 'ngResource','meusComponentes'])
 
         $routeProvider.otherwise({ redirectTo: '/contatos' });
 
-    });
+    }]);
